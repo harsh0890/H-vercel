@@ -1,4 +1,4 @@
-package com.nemo.vercel.utils;
+package com.nemo.deploy.utils;
 
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -21,15 +21,14 @@ public class UploadToObjectStore {
 
     public void upload(File directory, String sessionId, String bucketName,
                        String accessKey, String secretKey, String r2AccountId){
-        S3Client s3Client = S3Client.builder()
+
+        try (S3Client s3Client = S3Client.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)))
                 .region(Region.US_EAST_1)
                 .endpointOverride(URI.create("https://" + r2AccountId + ".r2.cloudflarestorage.com"))
                 .forcePathStyle(true)
-                .build();
-
-        try (Stream<Path> paths = Files.walk(directory.toPath())) {
+                .build(); Stream<Path> paths = Files.walk(directory.toPath())) {
             paths.filter(Files::isRegularFile).forEach(path -> {
                 String key = sessionId + "/" + directory.toPath().relativize(path).toString().replace("\\", "/");
                 s3Client.putObject(PutObjectRequest.builder()
@@ -41,8 +40,6 @@ public class UploadToObjectStore {
             });
         } catch (IOException e) {
             System.err.println("Error walking through directory: " + e.getMessage());
-        } finally {
-            s3Client.close();
         }
 
         System.out.println("Upload complete for session: " + sessionId);

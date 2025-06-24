@@ -1,11 +1,11 @@
-package com.nemo.vercel.controller;
+package com.nemo.deploy.controller;
 
-import com.nemo.vercel.requestprocessor.request.DeployRequest;
-import com.nemo.vercel.requestprocessor.response.DeployResponse;
-import com.nemo.vercel.utils.RedisPublisher;
-import com.nemo.vercel.utils.RedisService;
-import com.nemo.vercel.utils.SessionIdGenerator;
-import com.nemo.vercel.utils.UploadToObjectStore;
+import com.nemo.deploy.requestprocessor.request.DeployRequest;
+import com.nemo.deploy.requestprocessor.response.DeployResponse;
+import com.nemo.deploy.utils.RedisPublisher;
+import com.nemo.deploy.utils.RedisService;
+import com.nemo.deploy.utils.SessionIdGenerator;
+import com.nemo.deploy.utils.UploadToObjectStore;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.util.Map;
 
 @RestController
 @Slf4j

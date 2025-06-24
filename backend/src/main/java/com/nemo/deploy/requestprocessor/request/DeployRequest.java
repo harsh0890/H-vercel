@@ -1,4 +1,4 @@
-package com.nemo.vercel.requestprocessor.request;
+package com.nemo.deploy.requestprocessor.request;
 
 
 import lombok.AllArgsConstructor;

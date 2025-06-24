@@ -1,4 +1,4 @@
-package com.nemo.vercel;
+package com.nemo.deploy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

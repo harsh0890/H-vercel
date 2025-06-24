@@ -1,4 +1,4 @@
-package com.nemo.vercel.config;
+package com.nemo.deploy.config;
 
 
 import org.springframework.context.annotation.Bean;

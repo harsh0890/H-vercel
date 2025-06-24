@@ -1,4 +1,4 @@
-package com.nemo.vercel.utils;
+package com.nemo.deploy.utils;
 
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
@@ -10,7 +10,7 @@ public class RedisPublisher {
 
             System.out.println("Ping: " + jedis.ping());
             System.out.println("Pushing to queue...");
-            long len = jedis.lpush(queueName, message);
+            long len = jedis.publish(queueName, message);
             System.out.println("New queue length: " + len);
 
             System.out.println("Queued: " + message);
