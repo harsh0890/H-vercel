@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import java.time.Duration;
 
@@ -19,14 +20,13 @@ public class RedisQueueListenerService {
     public void startListening() {
         Thread listenerThread = new Thread(() -> {
             while (true) {
-                try {
-                    String result = redisTemplate.opsForList().rightPop(QUEUE_NAME, Duration.ofSeconds(10));
-
+                try (Jedis jedis = new Jedis("localhost", 6379)){
+                    String result = jedis.lpop(QUEUE_NAME);
                     if (result != null && !result.isEmpty()) {
                         deployImpl(result);
                     }else {
-                        System.out.println("Queue empty. Thread entering sleep mode...");
-                        Thread.sleep(10000);
+                        System.out.println("No Data Found : Entering Sleep Mode");
+                        Thread.sleep(5000);
                     }
 
                 } catch (Exception e) {

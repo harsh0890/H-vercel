@@ -23,8 +23,6 @@ public class VercelController {
     private final RedisService redisService;
     private final RedisPublisher redisPublisher;
 
-    private static final String REDIS_HOST = "localhost";
-    private static final int REDIS_PORT = 6379;
     private static final String QUEUE_NAME = "build-queue";
 
 
@@ -70,7 +68,7 @@ public class VercelController {
             e.printStackTrace();
         }
 
-        redisPublisher.lpush("build-queue", sessionId);
+        redisPublisher.push(QUEUE_NAME, sessionId);
         response.setId(sessionId);
 
         return response;
