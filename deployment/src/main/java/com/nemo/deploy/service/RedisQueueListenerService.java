@@ -1,20 +1,15 @@
 package com.nemo.deploy.service;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
-import java.time.Duration;
-
 @Service
+@Slf4j
 public class RedisQueueListenerService {
 
     private static final String QUEUE_NAME = "build-queue";
-
-    @Autowired
-    private StringRedisTemplate redisTemplate;
 
     @PostConstruct
     public void startListening() {
@@ -25,7 +20,7 @@ public class RedisQueueListenerService {
                     if (result != null && !result.isEmpty()) {
                         deployImpl(result);
                     }else {
-                        System.out.println("No Data Found : Entering Sleep Mode");
+                        log.debug("No Data Found : Thread entering sleep mode");
                         Thread.sleep(5000);
                     }
 
