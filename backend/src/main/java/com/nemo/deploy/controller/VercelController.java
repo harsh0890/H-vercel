@@ -77,7 +77,12 @@ public class VercelController {
 
     @GetMapping("/status")
     public String checkStatus(@RequestParam("id") String id){
-        String nextSessionId = redisService.getNextSessionId();
-        return nextSessionId;
+        try {
+            String status = redisService.getDeploymentStatus(id);
+            return status != null ? status : "PENDING";
+        } catch (Exception e) {
+            log.error("Error checking status: {}", e.getMessage());
+            return "ERROR";
+        }
     }
 }
