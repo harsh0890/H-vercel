@@ -11,6 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeployResponse {
-
     private String id;
 }

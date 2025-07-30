@@ -11,6 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeployRequest {
-
     private String repoUrl;
 }
