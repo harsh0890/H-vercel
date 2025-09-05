@@ -9,6 +9,7 @@ import com.nemo.deploy.utils.UploadToObjectStore;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,7 @@ public class VercelController {
             try (Git git = Git.cloneRepository()
                     .setURI(request.getRepoUrl())
                     .setDirectory(localPath)
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(request.getUserName(),request.getTempAuthenticationToken()))
                     .call()) {
                 System.out.println("Cloned repo to: " + git.getRepository().getDirectory());
             }
@@ -66,6 +68,12 @@ public class VercelController {
         } catch (Exception e) {
             System.err.println("Cloning failed: " + e.getMessage());
             e.printStackTrace();
+            throw new GitAPIException("Error While Downloading Repo") {
+                @Override
+                public String getLocalizedMessage() {
+                    return super.getLocalizedMessage();
+                }
+            };
         }
 
         redisPublisher.push(QUEUE_NAME, sessionId);

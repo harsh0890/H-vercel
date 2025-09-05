@@ -36,7 +36,7 @@ public class DeploymentController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{sessionId}")
+    @DeleteMapping("/halt/{sessionId}")
     public ResponseEntity<String> stopDeployment(@PathVariable String sessionId) {
         try {
             dockerManager.stopAndRemoveContainer(sessionId);
@@ -48,7 +48,7 @@ public class DeploymentController {
         }
     }
 
-    @PostMapping("/{sessionId}/restart")
+    @PostMapping("/restart/{sessionId}")
     public ResponseEntity<String> restartDeployment(@PathVariable String sessionId) {
         try {
             DeploymentStatus status = deploymentStatusService.getStatus(sessionId);
