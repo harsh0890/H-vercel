@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeployRequest {
-
     private String repoUrl;
+    private String userName;
+    private String tempAuthenticationToken;
 }

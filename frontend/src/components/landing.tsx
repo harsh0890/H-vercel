@@ -20,6 +20,8 @@ const BACKEND_UPLOAD_URL = "http://localhost:8080";
 export function Landing() {
   const [repoUrl, setRepoUrl] = useState("");
   const [uploadId, setUploadId] = useState("");
+  const [userName, setUserName] = useState("");
+  const [accessKey, setAccesKey] = useState("");
   const [uploading, setUploading] = useState(false);
   const [deployed, setDeployed] = useState(false);
 
@@ -44,12 +46,26 @@ export function Landing() {
                 }}
                 placeholder="https://github.com/username/repo"
               />
+              <Input
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+                placeholder="myuser123"
+              />
+              <Input
+                onChange={(e) => {
+                  setAccesKey(e.target.value);
+                }}
+                placeholder="myUserAccessKey1234"
+              />
             </div>
             <Button
               onClick={async () => {
                 setUploading(true);
                 const res = await axios.post(`${BACKEND_UPLOAD_URL}/deploy`, {
                   repoUrl: repoUrl,
+                  userName: userName,
+                  accessKey: accessKey,
                 });
                 setUploadId(res.data.id);
                 setUploading(false);

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: vercel
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/sys
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8080
+
+accessKey: ""
+accountId: "c4f90ec88ef9dbc158bdc6eaa8bb99bc"
+secretKey: ""
